@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:conv="clr-namespace:DreamLog.Converters"
+             mc:Ignorable="d"
+             x:Class="DreamLog.Views.CreateEditLogEntryPage"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:CreatedAtConverter x:Key="createdAtConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel" Clicked="OnCancelClicked"/>
+        <ToolbarItem Text="Save" Clicked="OnSaveDreamLogEntryClicked"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <ScrollView Padding="5" Margin="10,0,0,50" Orientation="Vertical" HorizontalOptions="Fill" VerticalOptions="Fill">
+            <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Text="Title" FontSize="Medium" VerticalTextAlignment="Center"/>
+                <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Path=Entry.Title}" d:Text="" IsTextPredictionEnabled="True" 
+                   Placeholder="Give your dream a title..." FontSize="Small"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Text="Date" FontSize="Medium" VerticalTextAlignment="Center"/>
+                <DatePicker Grid.Row="1" Grid.Column="1" WidthRequest="50" Date="{Binding Path=Entry.Date}"/>
+
+                <Label Grid.Row="2" Grid.Column="0" Text="Category" FontSize="Medium" VerticalTextAlignment="Center"/>
+                <Picker Grid.Row="2" Grid.Column="1" Title="Categorize your dream..." ItemsSource="{Binding Path=Categories}" 
+                    SelectedIndex="{Binding Path=SelectedCategoryIndex}" ItemDisplayBinding="{Binding Path=Name}"/>
+                <!--SelectedItem="{Binding Path=Entry.SelectedCategory}"-->
+
+                <Label Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Text="Description" FontSize="Medium" VerticalTextAlignment="End" />
+                <Editor Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Text="{Binding Entry.Content}" d:Text="" Placeholder="Write down your dream..." FontSize="Small" 
+                    Margin="0" IsTextPredictionEnabled="True"/>
+
+                <Label Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Text="{Binding Converter={StaticResource createdAtConverter}, Path=Entry.CreatedAt}" 
+                   IsVisible="{Binding Path=IsEdit}" FontSize="Medium" VerticalTextAlignment="Center"/>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+
+</ContentPage>

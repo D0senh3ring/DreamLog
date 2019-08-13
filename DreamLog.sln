@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamLib", "DreamLib\DreamLib.csproj", "{0452CD4F-3D57-4805-BE13-5969136BAF5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamLog.Android", "DreamLog\DreamLog.Android\DreamLog.Android.csproj", "{2BF2259A-CA0F-4C98-9CB8-8FD6F17B2C4A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DreamLog", "DreamLog\DreamLog\DreamLog.csproj", "{53B85800-0BC2-4FE0-816D-B595D445EDBC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0452CD4F-3D57-4805-BE13-5969136BAF5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0452CD4F-3D57-4805-BE13-5969136BAF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0452CD4F-3D57-4805-BE13-5969136BAF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0452CD4F-3D57-4805-BE13-5969136BAF5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BF2259A-CA0F-4C98-9CB8-8FD6F17B2C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BF2259A-CA0F-4C98-9CB8-8FD6F17B2C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BF2259A-CA0F-4C98-9CB8-8FD6F17B2C4A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2BF2259A-CA0F-4C98-9CB8-8FD6F17B2C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BF2259A-CA0F-4C98-9CB8-8FD6F17B2C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BF2259A-CA0F-4C98-9CB8-8FD6F17B2C4A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{53B85800-0BC2-4FE0-816D-B595D445EDBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53B85800-0BC2-4FE0-816D-B595D445EDBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53B85800-0BC2-4FE0-816D-B595D445EDBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53B85800-0BC2-4FE0-816D-B595D445EDBC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2FA864AF-2E9E-4B10-B517-DE8F6B5BA8AC}
+	EndGlobalSection
+EndGlobal

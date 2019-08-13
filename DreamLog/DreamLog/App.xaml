@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="DreamLog.App">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--Global Styles-->
+            <Color x:Key="NavigationPrimary">#242323</Color>
+            <Color x:Key="DefaultBackground">#454443</Color>
+            <Color x:Key="DefaultForeground">#c4c3c2</Color>
+            <Color x:Key="PlaceholderColor">#a8a7a7</Color>
+            
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
+                <Setter Property="BarTextColor" Value="{StaticResource DefaultForeground}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource DefaultBackground}"/>
+            </Style>
+
+            <Style TargetType="StackLayout">
+                <Setter Property="BackgroundColor" Value="{StaticResource DefaultBackground}"/>
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="{StaticResource DefaultBackground}"/>
+            </Style>
+            
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource DefaultForeground}"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="{StaticResource DefaultForeground}"/>
+            </Style>
+            <Style TargetType="Picker">
+                <Setter Property="TitleColor" Value="{StaticResource PlaceholderColor}"/>
+                <Setter Property="TextColor" Value="{StaticResource DefaultForeground}"/>
+            </Style>
+            <Style TargetType="DatePicker">
+                <Setter Property="TextColor" Value="{StaticResource DefaultForeground}"/>
+            </Style>
+            <Style TargetType="Editor">
+                <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderColor}"/>
+                <Setter Property="TextColor" Value="{StaticResource DefaultForeground}"/>
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="PlaceholderColor" Value="{StaticResource PlaceholderColor}"/>
+                <Setter Property="TextColor" Value="{StaticResource DefaultForeground}"/>
+            </Style>
+            <Style TargetType="BoxView">
+                <Setter Property="BackgroundColor" Value="{StaticResource DefaultForeground}"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+    
+</Application>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ctrl="clr-namespace:DreamLog.Controls"
+             mc:Ignorable="d"
+             x:Class="DreamLog.Views.DreamCategoriesPage"
+             Title="{Binding Title}"
+             x:Name="browseCategoriesPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="+" Clicked="OnAddCategoryClicked"/>
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="categoriesListView"
+                      ItemsSource="{Binding Path=Items}"
+                      HasUnevenRows="True"
+                      RefreshCommand="{Binding LoadCategoriesCommand}"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding Path=IsBusy, Mode=OneWay}"
+                      CachingStrategy="RecycleElement"
+                      ItemSelected="OnCategorySelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ctrl:OldSwipeGestureGrid SwipeLeft="OnLogEntrySwipedLeft" SwipeRight="OnLogEntrySwipedRight" Tapped="OnDreamCategoryTapped">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0"/>
+                                </Grid.ColumnDefinitions>
+
+                                <BoxView Grid.Column="0" BackgroundColor="{Binding Path=Color, FallbackValue=Transparent}"/>
+                                <Label Grid.Column="1" Text="{Binding Path=Name}" d:Text="{Binding .}" LineBreakMode="NoWrap"
+                                       Style="{DynamicResource ListItemTextStyle}" FontSize="16" VerticalOptions="Center"/>
+
+                                <Button Grid.Column="2" Text="D" BackgroundColor="Red" IsEnabled="{Binding Path=CanBeDeleted}" TextColor="White" Margin="0" Padding="0" 
+                                        HorizontalOptions="Fill" Clicked="OnDeleteCategoryClick">
+                                    <Button.Triggers>
+                                        <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                                            <Setter Property="BackgroundColor" Value="LightGray"/>
+                                        </Trigger>
+                                    </Button.Triggers>
+                                </Button>
+                            </ctrl:OldSwipeGestureGrid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
