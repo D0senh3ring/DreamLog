@@ -34,6 +34,7 @@ namespace DreamLog.ViewModels
         private void OnDreamCategoryCreated(CreateEditDreamCategoryPage page, DreamCategoryEditorViewModel model)
         {
             DreamCategory category = model.Copy<DreamCategory>();
+            category.DreamLogEntries = new List<DreamLogEntry>();
             category.CategoryId = 0;
 
             if (this.datalayer.AddDreamCategory(category))
@@ -51,8 +52,6 @@ namespace DreamLog.ViewModels
             this.LoadCategoriesCommand.Execute(null);
             this.IsBusy = false;
         }
-
-        
 
         private async Task ExecuteLoadCategoriesCommand()
         {

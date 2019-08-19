@@ -3,14 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:views="clr-namespace:DreamLog.Views"
              xmlns:conv="clr-namespace:DreamLog.Converters"
-             xmlns:ctrl="clr-namespace:DreamLog.Controls"
+             xmlns:gestures="clr-namespace:DreamLog.Gestures"
+             xmlns:ico="clr-namespace:DreamLog.Icons"
              mc:Ignorable="d"
              x:Class="DreamLog.Views.LogEntriesPage"
              Title="{Binding Title}"
-             x:Name="BrowseLogEntriesPage"
-             xmlns:mr="clr-namespace:MR.Gestures;assembly=MR.Gestures">
+             x:Name="BrowseLogEntriesPage">
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:TextSpoilerConverter x:Key="spoilerConverter"/>
@@ -19,59 +18,62 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="+" Clicked="OnAddLogEntryClicked" />
+        <ToolbarItem Clicked="OnAddLogEntryClicked" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="{DynamicResource MaterialFontFamily}" 
+                                 Glyph="{Binding Source={x:Static ico:MaterialDesignIcons.PencilPlusOutline}}" Size="24"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <StackLayout Orientation="Vertical">
-
-        <ctrl:SwipeListView BackgroundColor="Gray"></ctrl:SwipeListView>
-
-        <ListView x:Name="ItemsListView"
+    <ListView x:Name="ItemsListView"
                 ItemsSource="{Binding Path=Items}"
                 VerticalOptions="FillAndExpand"
                 HasUnevenRows="true"
                 RefreshCommand="{Binding Path=LoadItemsCommand}"
                 IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding Path=IsBusy, Mode=OneWay}"
-                
                 SelectedItem="{Binding Path=SelectedLogEntry}"
                 ItemSelected="OnItemSelected">
-            <d:ListView.ItemsSource>
-                <x:Array Type="{x:Type controls:DreamLogItem}"></x:Array>
-            </d:ListView.ItemsSource>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ctrl:SwipeGestureGrid SwipeEnded="OnLogEntrySwipeEnded" Swiping="OnLogEntrySwiping" Tapped="OnLogEntryTapped" 
-                                               SwipeThreshold="5">
+        <ListView.GestureRecognizers>
+            <gestures:ListViewSwipeGestureRecognizer Swiping="OnEntriesListViewSwiping" Swiped="OnEntriesListViewSwiped"/>
+        </ListView.GestureRecognizers>
+        <d:ListView.ItemsSource>
+            <x:Array Type="{x:Type controls:DreamLogItem}"></x:Array>
+        </d:ListView.ItemsSource>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid>
+                        <Grid Style="{DynamicResource Key=deleteParentView}" HorizontalOptions="Fill" VerticalOptions="Fill">
+                            <Label VerticalOptions="Center" HorizontalOptions="End" Margin="10,5" FontSize="30"
+                                   FontFamily="{DynamicResource MaterialFontFamily}" Text="{Binding Source={x:Static ico:MaterialDesignIcons.TrashCanOutline}}"/>
+                        </Grid>
 
-                            <BoxView BackgroundColor="Red" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
 
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="10"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="25"/>
-                                    <RowDefinition Height="25"/>
-                                </Grid.RowDefinitions>
-
-                                <BoxView Grid.Column="0" Grid.RowSpan="2" BackgroundColor="{Binding FallbackValue=Transparent, Path=SelectedCategory.Color}"/>
-                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Title}" d:Text="{Binding .}" LineBreakMode="NoWrap" 
+                            <BoxView Grid.Column="0" Grid.RowSpan="2" BackgroundColor="{Binding FallbackValue=Transparent, Path=SelectedCategory.Color}"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Title}" d:Text="{Binding .}" LineBreakMode="NoWrap" 
                                    Style="{DynamicResource ListItemTextStyle}" FontSize="16"  VerticalOptions="Center"/>
-                                <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalOptions="Center">
-                                    <Label Text="{Binding Path=Date, Converter={StaticResource dateDisplayConverter}}" LineBreakMode="NoWrap" 
+                            <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalOptions="Center">
+                                <Label Text="{Binding Path=Date, Converter={StaticResource dateDisplayConverter}}" LineBreakMode="NoWrap" 
                                        Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13"/>
-                                    <Label Text="{Binding Path=Content, Converter={StaticResource spoilerConverter}, ConverterParameter=32}" 
+                                <Label Text="{Binding Path=Content, Converter={StaticResource spoilerConverter}, ConverterParameter=32}" 
                                        d:Text="Content" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
-                                </StackLayout>
-                            </Grid>
-                        </ctrl:SwipeGestureGrid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 
 </ContentPage>

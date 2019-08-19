@@ -1,19 +1,16 @@
-﻿using DreamLib.Data;
-using DreamLib.DependencyInjection;
-using DreamLib.Tools;
-using DreamLog.Controls;
+﻿using DreamLib.DependencyInjection;
+using System.ComponentModel;
 using DreamLog.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using DreamLib.Tools;
+using DreamLog.Tools;
+using DreamLib.Data;
+using Xamarin.Forms;
+using System;
 
 namespace DreamLog.Views
 {
+    [DesignTimeVisible(false)]
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DreamCategoriesPage : ContentPage
     {
@@ -35,44 +32,12 @@ namespace DreamLog.Views
 
         private async void OnCategorySelected(object sender, SelectedItemChangedEventArgs e)
         {
-            //TODO: OnCategorySelected currently cannot be called
-            DreamCategoryViewModel model = e.SelectedItem as DreamCategoryViewModel;
-            if (!(model is null))
+            if (e.SelectedItem is DreamCategoryViewModel model)
             {
                 DreamCategoryEditorViewModel editorModel = new DreamCategoryEditorViewModel();
                 editorModel.Update(model);
                 await this.Navigation.PushModalAsync(new NavigationPage(new CreateEditDreamCategoryPage(editorModel)));
                 this.categoriesListView.SelectedItem = null;
-            }
-        }
-
-        private async void OnDreamCategoryTapped(object sender, EventArgs e)
-        {
-            if (sender is OldSwipeGestureGrid grid && grid.BindingContext is DreamCategoryViewModel model)
-            {
-                if (!(model is null))
-                {
-                    DreamCategoryEditorViewModel editorModel = new DreamCategoryEditorViewModel();
-                    editorModel.Update(model);
-                    await this.Navigation.PushModalAsync(new NavigationPage(new CreateEditDreamCategoryPage(editorModel)));
-                    this.categoriesListView.SelectedItem = null;
-                }
-            }
-        }
-
-        private void OnLogEntrySwipedLeft(object sender, EventArgs e)
-        {
-            if (sender is OldSwipeGestureGrid grid)
-            {
-                grid.ColumnDefinitions[2].Width = new GridLength(50, GridUnitType.Absolute);
-            }
-        }
-
-        private void OnLogEntrySwipedRight(object sender, EventArgs e)
-        {
-            if (sender is OldSwipeGestureGrid grid)
-            {
-                grid.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Absolute);
             }
         }
 
@@ -84,12 +49,35 @@ namespace DreamLog.Views
                 this.viewModel.LoadCategoriesCommand.Execute(null);
         }
 
-        private void OnDeleteCategoryClick(object sender, EventArgs e)
+        private async void OnCategoriesListViewSwiped(object sender, Gestures.ListViewSwipeEventArgs e)
         {
-            if(sender is Button button && button.Parent.BindingContext is DreamCategoryViewModel model)
+            if (e.SwipedItem is Grid grid && grid.Children.Count == 2)
             {
-                if(this.datalayer.RemoveDreamCategory(model.CategoryId))
-                    this.viewModel.LoadCategoriesCommand.Execute(null);
+                grid.Children[1].TranslationX = 0;
+
+                if (grid.Children[0].IsEnabled && grid.BindingContext is DreamCategoryViewModel model)
+                {
+                    await grid.Children[1].TranslateToAbsolute(-grid.Width, 0);
+
+                    if (this.datalayer.RemoveDreamCategory(model.CategoryId))
+                        this.viewModel.Items.Remove(model);
+
+                    //TODO: Timed undo action
+                }
+                else
+                {
+                    await grid.Children[1].TranslateToAbsolute(0, 0);
+                }
+            }
+        }
+
+        private void OnCategoriesListViewSwiping(object sender, Gestures.ListViewSwipeEventArgs e)
+        {
+            if (e.SwipedItem is Grid grid && grid.Children.Count == 2 && e.OffsetX <= 0.0d && grid.BindingContext is DreamCategoryViewModel model)
+            {
+                if (Math.Abs(e.OffsetX) >= grid.Width / 3.0d != grid.Children[0].IsEnabled)
+                    grid.Children[0].IsEnabled = !grid.Children[0].IsEnabled && model.DreamLogEntries?.Count == 0;
+                grid.Children[1].TranslationX = e.OffsetX;
             }
         }
     }

@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:conv="clr-namespace:DreamLog.Converters"
+             xmlns:ico="clr-namespace:DreamLog.Icons"
              mc:Ignorable="d"
              x:Class="DreamLog.Views.CreateEditLogEntryPage"
              Title="{Binding Title}">
@@ -14,8 +15,18 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Cancel" Clicked="OnCancelClicked"/>
-        <ToolbarItem Text="Save" Clicked="OnSaveDreamLogEntryClicked"/>
+        <ToolbarItem Clicked="OnCancelClicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="{DynamicResource MaterialFontFamily}" 
+                                 Glyph="{Binding Source={x:Static ico:MaterialDesignIcons.AlphaX}}" Size="24"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem Clicked="OnSaveDreamLogEntryClicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="{DynamicResource MaterialFontFamily}" 
+                                 Glyph="{Binding Source={x:Static ico:MaterialDesignIcons.DownloadOutline}}" Size="24"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
