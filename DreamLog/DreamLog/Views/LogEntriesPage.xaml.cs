@@ -1,9 +1,11 @@
 ﻿using DreamLib.DependencyInjection;
+using Rg.Plugins.Popup.Extensions;
 using System.Collections.Generic;
 using System.ComponentModel;
 using DreamLog.ViewModels;
 using Xamarin.Forms.Xaml;
 using DreamLog.Gestures;
+using DreamLog.Icons;
 using DreamLib.Tools;
 using DreamLog.Tools;
 using Xamarin.Forms;
@@ -17,7 +19,8 @@ namespace DreamLog.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LogEntriesPage : ContentPage
     {
-        private readonly ItemsViewModel viewModel;
+        private readonly IEnumerable<FilterOptionViewModel> filterOptions;
+        private readonly DreamLogEntriesViewModel viewModel;
         private readonly IDatalayer datalayer;
 
         public LogEntriesPage()
@@ -25,7 +28,17 @@ namespace DreamLog.Views
             this.InitializeComponent();
 
             this.datalayer = DependencyContainer.GetSingleton<IDatalayer>();
-            this.BindingContext = viewModel = new ItemsViewModel(this.datalayer);
+            this.BindingContext = viewModel = new DreamLogEntriesViewModel(this.datalayer);
+
+            this.filterOptions = new[]
+            {
+                new FilterOptionViewModel() { Icon = MaterialDesignIcons.SortDescending, Title = "By Date from recent to old", TapCommand = this.viewModel.SortEntriesCommand, TapCommandParameter = new FilterOptionCommandParameter("Date", ListSortDirection.Descending) },
+                new FilterOptionViewModel() { Icon = MaterialDesignIcons.SortAscending, Title = "By Date from old to recent", TapCommand = this.viewModel.SortEntriesCommand, TapCommandParameter = new FilterOptionCommandParameter("Date", ListSortDirection.Ascending) },
+                new FilterOptionViewModel() { Icon = MaterialDesignIcons.SortAscending, Title = "By Title from A to Z", TapCommand = this.viewModel.SortEntriesCommand, TapCommandParameter = new FilterOptionCommandParameter("Title", ListSortDirection.Ascending) },
+                new FilterOptionViewModel() { Icon = MaterialDesignIcons.SortDescending, Title = "By Title from Z to A", TapCommand = this.viewModel.SortEntriesCommand, TapCommandParameter = new FilterOptionCommandParameter("Title", ListSortDirection.Descending) },
+                new FilterOptionViewModel() { Icon = MaterialDesignIcons.SortAscending, Title = "By Category-Id ascending", TapCommand = this.viewModel.SortEntriesCommand, TapCommandParameter = new FilterOptionCommandParameter("Category", ListSortDirection.Ascending) },
+                new FilterOptionViewModel() { Icon = MaterialDesignIcons.SortDescending, Title = "By Category-Id descending", TapCommand = this.viewModel.SortEntriesCommand, TapCommandParameter = new FilterOptionCommandParameter("Category", ListSortDirection.Descending) }
+            };
         }
 
         protected override void OnAppearing()
@@ -33,7 +46,10 @@ namespace DreamLog.Views
             base.OnAppearing();
 
             if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
+            {
+                viewModel.LoadEntriesCommand.Execute(null);
+                this.viewModel.IsBusy = false;
+            }
         }
 
         private IEnumerable<DreamCategoryViewModel> GetDreamCategories()
@@ -70,7 +86,7 @@ namespace DreamLog.Views
             {
                 grid.Children[1].TranslationX = 0;
 
-                if(grid.Children[0].IsEnabled && grid.BindingContext is DreamLogEntryViewModel model)
+                if (grid.Children[0].IsEnabled && grid.BindingContext is DreamLogEntryViewModel model)
                 {
                     await grid.Children[1].TranslateToAbsolute(-grid.Width, 0);
 
@@ -90,10 +106,15 @@ namespace DreamLog.Views
         {
             if (e.SwipedItem is Grid grid && grid.Children.Count == 2 && e.OffsetX <= 0.0d)
             {
-                if(Math.Abs(e.OffsetX) >= grid.Width / 3.0d != grid.Children[0].IsEnabled)
+                if (Math.Abs(e.OffsetX) >= grid.Width / 3.0d != grid.Children[0].IsEnabled)
                     grid.Children[0].IsEnabled = !grid.Children[0].IsEnabled;
                 grid.Children[1].TranslationX = e.OffsetX;
             }
+        }
+
+        private void OnSortEntriesClicked(object sender, EventArgs e)
+        {
+            Navigation.PushPopupAsync( new FilterPage(this.filterOptions), true);
         }
     }
 }

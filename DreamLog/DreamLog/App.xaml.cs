@@ -18,8 +18,20 @@ namespace DreamLog
 
         public App()
         {
-            InitializeComponent();
-            this.InitializeDatalayer();
+            this.InitializeComponent();
+
+#if DEBUG
+            try
+#endif
+            {
+                this.InitializeDatalayer();
+            }
+#if DEBUG
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+#endif
 
             this.MainPage = new MainPage();
         }
@@ -69,9 +81,16 @@ namespace DreamLog
 
         private void InstantiateDatalayer(string filePath)
         {
-            IDatalayer datalayer = new SQLiteDatalayer(filePath);
-            DependencyContainer.RegisterSingleton(datalayer);
-            this.InitiallyPopulateDatalayer(datalayer);
+            try
+            {
+                IDatalayer datalayer = new SQLiteDatalayer(filePath);
+                DependencyContainer.RegisterSingleton(datalayer);
+                this.InitiallyPopulateDatalayer(datalayer);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         private void InitiallyPopulateDatalayer(IDatalayer datalayer)

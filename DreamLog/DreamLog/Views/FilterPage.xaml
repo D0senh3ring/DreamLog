@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:conv="clr-namespace:DreamLog.Converters"
+             xmlns:ico="clr-namespace:DreamLog.Icons"
+             mc:Ignorable="d"
+             Title="Filteroptions"
+             x:Class="DreamLog.Views.FilterPage">
+    <pages:PopupPage.Resources>
+        <conv:FilterItemCountMarginConverter x:Key="marginConverter"/>
+    </pages:PopupPage.Resources>
+    <pages:PopupPage.Animation>
+        <animations:MoveAnimation PositionIn="Top" PositionOut="Top"
+                                  DurationIn="300" DurationOut="300"
+                                  EasingIn="SinOut" EasingOut="SinIn"
+                                  HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+
+    <Frame CornerRadius="30" Margin="{Binding Converter={StaticResource Key=marginConverter}}" 
+           BackgroundColor="{StaticResource Key=DefaultBackground}">
+        <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Horizontal" HeightRequest="49">
+                <Label FontFamily="{DynamicResource MaterialFontFamily}" Text="{Binding Source={x:Static ico:MaterialDesignIcons.Sort}}" 
+                       FontSize="32" VerticalOptions="Center"/>
+                <Label Text="Sort Items" FontSize="24" VerticalOptions="Center"/>
+            </StackLayout>
+            
+            <BoxView HorizontalOptions="FillAndExpand" HeightRequest="1" BackgroundColor="{StaticResource PlaceholderColor}"/>
+
+            <ListView ItemsSource="{Binding}"
+                      BackgroundColor="{StaticResource Key=PlaceholderColor}"
+                      HasUnevenRows="True"
+                      IsPullToRefreshEnabled="False"
+                      ItemSelected="OnOptionSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid HeightRequest="50">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Column="0" Text="{Binding Path=Icon}" FontFamily="{DynamicResource MaterialFontFamily}" Margin="5"
+                                       VerticalOptions="Center" HorizontalOptions="Center" FontSize="18"/>
+                                <Label Grid.Column="1" Text="{Binding Path=Title}" Margin="5" VerticalOptions="Center" FontSize="18"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

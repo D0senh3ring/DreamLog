@@ -13,9 +13,9 @@ namespace DreamLog.Views
     [DesignTimeVisible(false)]
     public partial class LogEntryDetailPage : ContentPage
     {
-        private readonly ItemDetailViewModel viewModel;
+        private readonly DreamLogEntryViewModel viewModel;
 
-        public LogEntryDetailPage(ItemDetailViewModel viewModel)
+        public LogEntryDetailPage(DreamLogEntryViewModel viewModel)
         {
             InitializeComponent();
 
@@ -26,9 +26,7 @@ namespace DreamLog.Views
         {
             InitializeComponent();
 
-            var item = new DreamLogEntryViewModel();
-
-            viewModel = new ItemDetailViewModel(item);
+            viewModel = new DreamLogEntryViewModel();
             BindingContext = viewModel;
         }
     }

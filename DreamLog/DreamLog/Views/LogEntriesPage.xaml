@@ -18,7 +18,13 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="OnAddLogEntryClicked" >
+        <ToolbarItem Clicked="OnSortEntriesClicked">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="{DynamicResource MaterialFontFamily}"
+                                 Glyph="{Binding Source={x:Static ico:MaterialDesignIcons.Sort}}" Size="24"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem Clicked="OnAddLogEntryClicked">
             <ToolbarItem.IconImageSource>
                 <FontImageSource FontFamily="{DynamicResource MaterialFontFamily}" 
                                  Glyph="{Binding Source={x:Static ico:MaterialDesignIcons.PencilPlusOutline}}" Size="24"/>
@@ -27,14 +33,14 @@
     </ContentPage.ToolbarItems>
 
     <ListView x:Name="ItemsListView"
-                ItemsSource="{Binding Path=Items}"
-                VerticalOptions="FillAndExpand"
-                HasUnevenRows="true"
-                RefreshCommand="{Binding Path=LoadItemsCommand}"
-                IsPullToRefreshEnabled="true"
-                IsRefreshing="{Binding Path=IsBusy, Mode=OneWay}"
-                SelectedItem="{Binding Path=SelectedLogEntry}"
-                ItemSelected="OnItemSelected">
+              ItemsSource="{Binding Path=Items}"
+              VerticalOptions="FillAndExpand"
+              HasUnevenRows="true"
+              RefreshCommand="{Binding Path=LoadEntriesCommand}"
+              IsPullToRefreshEnabled="true"
+              IsRefreshing="{Binding Path=IsBusy, Mode=OneWay}"
+              SelectedItem="{Binding Path=SelectedLogEntry}"
+              ItemSelected="OnItemSelected">
         <ListView.GestureRecognizers>
             <gestures:ListViewSwipeGestureRecognizer Swiping="OnEntriesListViewSwiping" Swiped="OnEntriesListViewSwiped"/>
         </ListView.GestureRecognizers>

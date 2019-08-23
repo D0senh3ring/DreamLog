@@ -14,8 +14,8 @@ namespace DreamLog.ViewModels
 {
     public class DreamCategoriesViewModel : BaseViewModel
     {
-        public ObservableCollection<DreamCategoryViewModel> Items { get; set; }
-        public Command LoadCategoriesCommand { get; set; }
+        public ObservableCollection<DreamCategoryViewModel> Items { get; }
+        public Command LoadCategoriesCommand { get; }
 
         private readonly IDatalayer datalayer;
 
@@ -76,7 +76,7 @@ namespace DreamLog.ViewModels
         private void LoadCategories()
         {
             this.Items.Clear();
-            IEnumerable<DreamCategory> categories = this.datalayer.DreamCategories;
+            IEnumerable<DreamCategory> categories = this.datalayer?.DreamCategories;
 
             foreach(DreamCategory category in categories)
             {
