@@ -9,6 +9,7 @@ using DreamLib.Data.Models;
 using DreamLog.ViewModels;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace DreamLog.Views
 {
@@ -26,7 +27,7 @@ namespace DreamLog.Views
         {
             this.Entry.SelectedCategory = this.Categories.First();
             this.IsEdit = false;
-
+            
             this.Title = "Create log entry";
         }
 
@@ -41,11 +42,9 @@ namespace DreamLog.Views
             this.IsEdit = true;
 
             if (this.Entry.FK_CategoryId.HasValue)
-                //this.Entry.SelectedCategory = this.Categories.Single(_cat => _cat.CategoryId == this.Entry.FK_CategoryId);
                 this.SelectedCategoryIndex = this.Categories.IndexOf(_category => _category.CategoryId == this.Entry.FK_CategoryId);
             else
                 this.SelectedCategoryIndex = this.Categories.IndexOf(_category => _category.CategoryId == -1);
-                //this.Entry.SelectedCategory = this.Categories.Single(_cat => _cat.CategoryId == -1);
 
             this.BindingContext = this;
         }
@@ -72,7 +71,7 @@ namespace DreamLog.Views
             if (this.ValidateLogEntry())
             {
                 MessagingCenter.Send(this, this.IsEdit ? MessagingCenterMessages.EditLogEntry : MessagingCenterMessages.AddLogEntry, this.Entry);
-                
+
                 await this.Navigation.PopModalAsync();
             }
         }

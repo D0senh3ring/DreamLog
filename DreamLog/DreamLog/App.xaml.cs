@@ -41,14 +41,14 @@ namespace DreamLog
             if (!DependencyContainer.IsRegistered<IDatalayer>())
             {
 #if DEBUG
-                string filename = "debug_dreamlogs.sqlite";
+                string filename = "_debug_dreamlogs.sqlite";
 #else
                 string filename = "dreamlogs.sqlite";
 #endif
                 string filePath = Path.Combine(FileSystem.AppDataDirectory, filename);
                 bool initialized = false;
 
-                while(!initialized)
+                while (!initialized)
                 {
                     this.CreateDatabaseFile(filePath);
                     this.InstantiateDatalayer(filePath);
@@ -63,7 +63,7 @@ namespace DreamLog
         {
             DependencyContainer.RemoveSingleton<IDatalayer>();
             FileInfo dataSourceFile = new FileInfo(filePath);
-            if(dataSourceFile.Exists)
+            if (dataSourceFile.Exists)
             {
                 dataSourceFile.Delete();
             }
@@ -83,7 +83,7 @@ namespace DreamLog
         {
             try
             {
-                IDatalayer datalayer = new SQLiteDatalayer(filePath);
+                IDatalayer datalayer = new DreamLogDatalayer(filePath);
                 DependencyContainer.RegisterSingleton(datalayer);
                 this.InitiallyPopulateDatalayer(datalayer);
             }

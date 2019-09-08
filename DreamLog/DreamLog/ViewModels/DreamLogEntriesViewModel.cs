@@ -67,7 +67,10 @@ namespace DreamLog.ViewModels
         {
             DreamLogEntry original = datalayer.GetLogEntry(model.EntryId);
             original.Update(model);
-            this.datalayer.SaveChanges();
+            if(this.datalayer.SaveChanges() > 0)
+            {
+                this.LoadItems();
+            }
             this.IsBusy = false;
         }
 

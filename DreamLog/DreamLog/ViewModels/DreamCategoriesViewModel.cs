@@ -34,11 +34,13 @@ namespace DreamLog.ViewModels
         private void OnDreamCategoryCreated(CreateEditDreamCategoryPage page, DreamCategoryEditorViewModel model)
         {
             DreamCategory category = model.Copy<DreamCategory>();
-            category.DreamLogEntries = new List<DreamLogEntry>();
             category.CategoryId = 0;
 
             if (this.datalayer.AddDreamCategory(category))
+            {
+                model.CategoryId = category.CategoryId;
                 this.Items.Add(model);
+            }
 
             this.IsBusy = false;
         }

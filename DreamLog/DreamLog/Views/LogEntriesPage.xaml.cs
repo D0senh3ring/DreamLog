@@ -45,11 +45,8 @@ namespace DreamLog.Views
         {
             base.OnAppearing();
 
-            if (viewModel.Items.Count == 0)
-            {
-                viewModel.LoadEntriesCommand.Execute(null);
-                this.viewModel.IsBusy = false;
-            }
+            viewModel.LoadEntriesCommand.Execute(null);
+            this.viewModel.IsBusy = false;
         }
 
         private IEnumerable<DreamCategoryViewModel> GetDreamCategories()
@@ -114,7 +111,7 @@ namespace DreamLog.Views
 
         private void OnSortEntriesClicked(object sender, EventArgs e)
         {
-            Navigation.PushPopupAsync( new FilterPage(this.filterOptions), true);
+            Navigation.PushPopupAsync(new SortingPopupPage(this.filterOptions), true);
         }
     }
 }

@@ -8,8 +8,8 @@
              xmlns:conv="clr-namespace:DreamLog.Converters"
              xmlns:ico="clr-namespace:DreamLog.Icons"
              mc:Ignorable="d"
-             Title="Filteroptions"
-             x:Class="DreamLog.Views.FilterPage">
+             Title="Sort Items"
+             x:Class="DreamLog.Views.SortingPopupPage">
     <pages:PopupPage.Resources>
         <conv:FilterItemCountMarginConverter x:Key="marginConverter"/>
     </pages:PopupPage.Resources>

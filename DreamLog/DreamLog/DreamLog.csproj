@@ -25,8 +25,11 @@
     <Compile Update="Views\CreateEditLogEntryPage.xaml.cs">
       <DependentUpon>CreateEditLogEntryPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\LogEntryDetailPage.xaml.cs">
-      <DependentUpon>LogEntryDetailPage.xaml</DependentUpon>
+    <Compile Update="Views\FilterDreamsPopupPage.xaml.cs">
+      <DependentUpon>FilterDreamsPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SortingPopupPage.xaml.cs">
+      <DependentUpon>SortingPopupPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\LogEntriesPage.xaml.cs">
       <DependentUpon>LogEntriesPage.xaml</DependentUpon>
@@ -40,8 +43,15 @@
     <EmbeddedResource Update="Views\DreamCategoriesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\FilterPage.xaml">
+    <EmbeddedResource Update="Views\FilterDreamsPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\SortingPopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
 </Project>

@@ -8,9 +8,9 @@ using Xamarin.Forms;
 namespace DreamLog.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FilterPage : PopupPage
+    public partial class SortingPopupPage : PopupPage
     {
-        public FilterPage(IEnumerable<FilterOptionViewModel> options)
+        public SortingPopupPage(IEnumerable<FilterOptionViewModel> options)
         {
             this.InitializeComponent();
 
