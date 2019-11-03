@@ -10,7 +10,7 @@
 
         public AboutViewModel()
         {
-            Title = "About";
+            this.Title = "About";
         }
 
         public string Version

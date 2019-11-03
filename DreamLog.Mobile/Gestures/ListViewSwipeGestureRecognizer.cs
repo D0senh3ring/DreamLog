@@ -31,9 +31,10 @@ namespace DreamLog.Gestures
             this.OffsetX = offsetX;
         }
 
-        public double StartPositionX { get; private set; }
-        public Element SwipedItem { get; private set; }
-        public double OffsetX { get; private set; }
-    }
+        public double StartPositionX { get; }
+        public Element SwipedItem { get; }
+        public double OffsetX { get; }
 
+        public SwipeDirection Direction { get { return this.OffsetX >= 0.0d ? SwipeDirection.Right : SwipeDirection.Left; } }
+    }
 }

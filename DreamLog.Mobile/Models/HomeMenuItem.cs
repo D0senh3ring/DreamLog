@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DreamLog.Models
+﻿namespace DreamLog.Models
 {
     public enum MenuItemType
     {

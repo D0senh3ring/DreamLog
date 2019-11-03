@@ -7,7 +7,6 @@ using Xamarin.Forms.Xaml;
 using DreamLog.Gestures;
 using DreamLog.Icons;
 using DreamLog.Tools;
-using DreamLog.Tools;
 using Xamarin.Forms;
 using DreamLog.Data;
 using System.Linq;
@@ -67,14 +66,14 @@ namespace DreamLog.Views
         {
             if (args.SelectedItem is DreamLogEntryViewModel model)
             {
-                await Navigation.PushModalAsync(new NavigationPage(new CreateEditLogEntryPage(model, this.GetDreamCategories())));
+                await this.Navigation.PushModalAsync(new NavigationPage(new CreateEditLogEntryPage(model, this.GetDreamCategories())));
                 this.ItemsListView.SelectedItem = null;
             }
         }
 
         private async void OnAddLogEntryClicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new NavigationPage(new CreateEditLogEntryPage(this.GetDreamCategories())));
+            await this.Navigation.PushModalAsync(new NavigationPage(new CreateEditLogEntryPage(this.GetDreamCategories())));
         }
 
         private async void OnEntriesListViewSwiped(object sender, ListViewSwipeEventArgs e)
@@ -83,7 +82,7 @@ namespace DreamLog.Views
             {
                 grid.Children[1].TranslationX = 0;
 
-                if (grid.Children[0].IsEnabled && grid.BindingContext is DreamLogEntryViewModel model)
+                if (e.Direction == SwipeDirection.Left && grid.Children[0].IsEnabled && grid.BindingContext is DreamLogEntryViewModel model)
                 {
                     await grid.Children[1].TranslateToAbsolute(-grid.Width, 0);
 
@@ -111,7 +110,7 @@ namespace DreamLog.Views
 
         private void OnSortEntriesClicked(object sender, EventArgs e)
         {
-            Navigation.PushPopupAsync(new SortingPopupPage(this.filterOptions), true);
+            this.Navigation.PushPopupAsync(new SortingPopupPage(this.filterOptions), true);
         }
     }
 }

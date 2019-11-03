@@ -1,13 +1,9 @@
-﻿using System;
-
-using Android.App;
+﻿using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
-using Android.Widget;
+using Android.App;
 using Android.OS;
-using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
-using Xamarin.Forms.Platform.Android;
 
 namespace DreamLog.Droid
 {

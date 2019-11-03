@@ -55,7 +55,7 @@ namespace DreamLog.Views
             {
                 grid.Children[1].TranslationX = 0;
 
-                if (grid.Children[0].IsEnabled && grid.BindingContext is DreamCategoryViewModel model)
+                if (e.Direction == SwipeDirection.Left && grid.Children[0].IsEnabled && grid.BindingContext is DreamCategoryViewModel model)
                 {
                     await grid.Children[1].TranslateToAbsolute(-grid.Width, 0);
 
